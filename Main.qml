@@ -5,6 +5,9 @@ import QtQuick.Controls
 Window {
     minimumWidth: 640
     minimumHeight: 480
+    Component.onCompleted: {
+        showFullScreen()
+    }
     visible: true
     Loader {
         id: pageLoader
