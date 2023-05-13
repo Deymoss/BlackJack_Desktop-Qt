@@ -1,28 +1,37 @@
 import QtQuick
+import Qt5Compat.GraphicalEffects
 
 Item {
     property string btnText: ""
     property string frontImage: ""
     property string backImage: ""
-    onBtnTextChanged: exitText.text = btnText
+    onBtnTextChanged: buttonText.text = btnText
     onFrontImageChanged: frontImg.source = frontImage
     onBackImageChanged: backImg.source = backImage
+    signal btnClicked()
     MouseArea {
         id: flipableButton
-        width: parent.width + exitText.width + 30
+        width: parent.width + buttonText.width + 30
         height: parent.height
         state: "front"
         hoverEnabled: true
 
         onClicked: {
-            Qt.quit()
+            btnClicked()
         }
 
         onEntered: {
             if(!flippable.transitions.running)
             flippable.state = "back"
-
+            buttonText.layer.enabled = true
+            expand.start()
         }
+        onExited: {
+            buttonText.layer.enabled = false
+            //buttonText.anchors.leftMargin = 30
+            collapse.start()
+        }
+
         Flipable {
             id: flippable
             property bool flipped: false
@@ -72,10 +81,10 @@ Item {
             transitions:[ Transition {
                     from: "*"
                     to: "back"
-                     ParallelAnimation {
-                    NumberAnimation { target: rotation; property: "angle"; duration: 200 }
-                    NumberAnimation { target: flippable ; property: "anchors.bottomMargin"; duration: 200 }
-                     }
+                    ParallelAnimation {
+                        NumberAnimation { target: rotation; property: "angle"; duration: 200 }
+                        NumberAnimation { target: flippable ; property: "anchors.bottomMargin"; duration: 200 }
+                    }
                     onRunningChanged: {
                         if(!running) {
                             flippable.state = "front"
@@ -86,13 +95,13 @@ Item {
                     from: "*"
                     to: "front"
                     NumberAnimation { target: rotation; property: "angle"; duration: 200 }
-                    NumberAnimation { target: flippable ; property: "anchors.bottomMargin"; duration: 200 }
+                    NumberAnimation { target: flippable; property: "anchors.bottomMargin"; duration: 200 }
                 }
             ]
 
         }
         Text {
-            id: exitText
+            id: buttonText
             anchors {
                 left: flippable.right
                 leftMargin: 30
@@ -100,9 +109,28 @@ Item {
             }
             text: text
             font.family: "Montserrat Alternates Black"
+            color: "white"
             font.bold: true
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 30
+            PropertyAnimation on anchors.leftMargin{
+                id: expand
+                to: 50
+                duration: 150
+                running: false
+            }
+            PropertyAnimation on anchors.leftMargin{
+                id: collapse
+                to: 30
+                duration: 150
+                running: false
+            }
+            layer.enabled: false
+            layer.effect: Glow {
+                samples: 25
+                color: "#610e0e"
+                transparentBorder: true
+            }
         }
     }
 }

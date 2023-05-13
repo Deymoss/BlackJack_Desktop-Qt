@@ -69,5 +69,6 @@
         <file>images/exit.png</file>
         <file>images/play.png</file>
         <file>images/settings.png</file>
+        <file>images/menu_back.png</file>
     </qresource>
 </RCC>

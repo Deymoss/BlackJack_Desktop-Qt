@@ -1,22 +1,36 @@
 import QtQuick
+import Qt5Compat.GraphicalEffects
 
 Item {
     Rectangle {
         anchors.fill: parent
-        color: "green"
+        Image {
+            id: backgroundMenu
+            anchors.fill: parent
+            source: "qrc:/images/menu_back.png"
+        }
 
         Text {
+            id: blackJackText
             anchors {
                 top: parent.top
                 topMargin: parent.height / 5
                 horizontalCenter: parent.horizontalCenter
             }
             text: "BlackJack"
+            color: "#e6a76c"
             font.family: "Montserrat Alternates Black"
             font.bold: true
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 50
+            font.pixelSize: 80
+            layer.enabled: true
+            layer.effect: Glow {
+                samples: 20
+                color: "black"
+                transparentBorder: true
+            }
         }
+
         FlipableButton {
             id: exitButton
             width: 100
@@ -29,6 +43,9 @@ Item {
                 left: parent.left
                 bottomMargin: parent.height / 8
                 leftMargin: 50
+            }
+            onBtnClicked: {
+                Qt.quit()
             }
         }
         FlipableButton {
@@ -44,6 +61,8 @@ Item {
                 bottomMargin: 30
                 leftMargin: 50
             }
+            onBtnClicked: {
+            }
         }
         FlipableButton {
             id: playButton
@@ -57,6 +76,8 @@ Item {
                 left: parent.left
                 bottomMargin: 30
                 leftMargin: 50
+            }
+            onBtnClicked: {
             }
         }
     }
