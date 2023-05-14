@@ -8,7 +8,7 @@ Item {
     onBtnTextChanged: buttonText.text = btnText
     onFrontImageChanged: frontImg.source = frontImage
     onBackImageChanged: backImg.source = backImage
-    signal btnClicked()
+    signal btnClicked
     MouseArea {
         id: flipableButton
         width: parent.width + buttonText.width + 30
@@ -21,8 +21,8 @@ Item {
         }
 
         onEntered: {
-            if(!flippable.transitions.running)
-            flippable.state = "back"
+            if (!flippable.transitions.running)
+                flippable.state = "back"
             buttonText.layer.enabled = true
             expand.start()
         }
@@ -59,34 +59,57 @@ Item {
             antialiasing: true
             transform: Rotation {
                 id: rotation
-                origin.x: flippable.width/2
-                origin.y: flippable.height/2
-                axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-                angle: 0    // the default angle
+                origin.x: flippable.width / 2
+                origin.y: flippable.height / 2
+                axis.x: 0
+                axis.y: 1
+                axis.z: 0 // set axis.y to 1 to rotate around y-axis
+                angle: 0 // the default angle
             }
 
-            states: [State {
+            states: [
+                State {
                     name: "back"
-                    PropertyChanges { target: rotation; angle: 180 }
-                    PropertyChanges { target: flippable; anchors.bottomMargin: 10 }
+                    PropertyChanges {
+                        target: rotation
+                        angle: 180
+                    }
+                    PropertyChanges {
+                        target: flippable
+                        anchors.bottomMargin: 10
+                    }
                 },
                 State {
                     name: "front"
-                    PropertyChanges { target: rotation; angle: 360 }
-                    PropertyChanges { target: flippable; anchors.bottomMargin: 0 }
+                    PropertyChanges {
+                        target: rotation
+                        angle: 360
+                    }
+                    PropertyChanges {
+                        target: flippable
+                        anchors.bottomMargin: 0
+                    }
                 }
             ]
 
-
-            transitions:[ Transition {
+            transitions: [
+                Transition {
                     from: "*"
                     to: "back"
                     ParallelAnimation {
-                        NumberAnimation { target: rotation; property: "angle"; duration: 200 }
-                        NumberAnimation { target: flippable ; property: "anchors.bottomMargin"; duration: 200 }
+                        NumberAnimation {
+                            target: rotation
+                            property: "angle"
+                            duration: 200
+                        }
+                        NumberAnimation {
+                            target: flippable
+                            property: "anchors.bottomMargin"
+                            duration: 200
+                        }
                     }
                     onRunningChanged: {
-                        if(!running) {
+                        if (!running) {
                             flippable.state = "front"
                         }
                     }
@@ -94,11 +117,18 @@ Item {
                 Transition {
                     from: "*"
                     to: "front"
-                    NumberAnimation { target: rotation; property: "angle"; duration: 200 }
-                    NumberAnimation { target: flippable; property: "anchors.bottomMargin"; duration: 200 }
+                    NumberAnimation {
+                        target: rotation
+                        property: "angle"
+                        duration: 200
+                    }
+                    NumberAnimation {
+                        target: flippable
+                        property: "anchors.bottomMargin"
+                        duration: 200
+                    }
                 }
             ]
-
         }
         Text {
             id: buttonText
@@ -113,13 +143,13 @@ Item {
             font.bold: true
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 30
-            PropertyAnimation on anchors.leftMargin{
+            PropertyAnimation on anchors.leftMargin {
                 id: expand
                 to: 50
                 duration: 150
                 running: false
             }
-            PropertyAnimation on anchors.leftMargin{
+            PropertyAnimation on anchors.leftMargin {
                 id: collapse
                 to: 30
                 duration: 150

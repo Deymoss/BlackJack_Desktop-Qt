@@ -18,6 +18,4 @@ Window {
         id: mainMenu
         MainMenu {}
     }
-
-
 }

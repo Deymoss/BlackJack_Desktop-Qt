@@ -36,7 +36,7 @@ Item {
             width: 100
             height: 100
             btnText: "Выйти из игры"
-            frontImage:  "qrc:/images/exit.png"
+            frontImage: "qrc:/images/exit.png"
             backImage: "qrc:/images/exit.png"
             anchors {
                 bottom: parent.bottom
@@ -53,7 +53,7 @@ Item {
             width: 100
             height: 100
             btnText: "Настройки"
-            frontImage:  "qrc:/images/settings.png"
+            frontImage: "qrc:/images/settings.png"
             backImage: "qrc:/images/settings.png"
             anchors {
                 bottom: exitButton.top
@@ -62,6 +62,7 @@ Item {
                 leftMargin: 50
             }
             onBtnClicked: {
+
             }
         }
         FlipableButton {
@@ -69,7 +70,7 @@ Item {
             width: 100
             height: 100
             btnText: "Играть"
-            frontImage:  "qrc:/images/play.png"
+            frontImage: "qrc:/images/play.png"
             backImage: "qrc:/images/play.png"
             anchors {
                 bottom: settingsButton.top
@@ -78,8 +79,8 @@ Item {
                 leftMargin: 50
             }
             onBtnClicked: {
+
             }
         }
     }
 }
-
